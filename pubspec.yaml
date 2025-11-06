@@ -1,11 +1,11 @@
 name: image_blur_analyzer
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/aaidarbekov132/image_blur_analyzer.git
 
 environment:
   sdk: ^3.7.0
-  flutter: '>=3.3.0'
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
