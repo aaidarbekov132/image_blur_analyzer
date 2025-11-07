@@ -17,7 +17,7 @@ public class ImageBlurAnalyzer: NSObject, FlutterPlugin {
     private let progressUpdateBatchSize = 100
 
     // --- Core Image Context
-    private let ciContext: CIContext = {
+    private lazy var ciContext: CIContext = {
         if let metalDevice = MTLCreateSystemDefaultDevice() {
             return CIContext(mtlDevice: metalDevice, options: [.workingColorSpace: NSNull(), .outputColorSpace: NSNull()])
         } else {
@@ -223,14 +223,17 @@ public class ImageBlurAnalyzer: NSObject, FlutterPlugin {
             }
 
             // Perform blur detection
-            let blurred = self.isBlurred(cgImage: cgImage)
+            self.processingQueue.async {
+                // This now runs safely on a background thread
+                let blurred = self.isBlurred(cgImage: cgImage)
 
-            if blurred {
-                // It's blurred, return the identifier
-                completion(asset.localIdentifier)
-            } else {
-                // Not blurred, complete immediately
-                completion(nil)
+                if blurred {
+                    // It's blurred, return the identifier
+                    completion(asset.localIdentifier)
+                } else {
+                    // Not blurred, complete immediately
+                    completion(nil)
+                }
             }
         }
         // Optional: Could store requestID and cancel it if needed.
