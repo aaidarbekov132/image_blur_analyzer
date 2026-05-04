@@ -1,6 +1,6 @@
 name: image_blur_analyzer
 description: A Flutter plugin to find blurry images in the user's photo gallery on iOS and Android.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/aaidarbekov132/image_blur_analyzer.git
 
 environment:
